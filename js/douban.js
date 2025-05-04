@@ -10,13 +10,17 @@ const doubanPageSize = 16; // 一次显示的项目数量
 
 // 初始化豆瓣功能
 function initDouban() {
-    // 设置豆瓣开关的初始状态
-    const doubanToggle = document.getElementById('doubanToggle').checked = true;
+    const doubanToggle = document.getElementById('doubanToggle');
     
     if (doubanToggle) {
+        // 如果尚未设置过，默认启用
+        if (localStorage.getItem('doubanEnabled') === null) {
+            localStorage.setItem('doubanEnabled', 'true');
+        }
+
         const isEnabled = localStorage.getItem('doubanEnabled') === 'true';
         doubanToggle.checked = isEnabled;
-        
+
         // 设置开关外观
         const toggleBg = doubanToggle.nextElementSibling;
         const toggleDot = toggleBg.nextElementSibling;
@@ -24,12 +28,12 @@ function initDouban() {
             toggleBg.classList.add('bg-pink-600');
             toggleDot.classList.add('translate-x-6');
         }
-        
+
         // 添加事件监听
-        doubanToggle.addEventListener('change', function(e) {
+        doubanToggle.addEventListener('change', function (e) {
             const isChecked = e.target.checked;
             localStorage.setItem('doubanEnabled', isChecked);
-            
+
             // 更新开关外观
             if (isChecked) {
                 toggleBg.classList.add('bg-pink-600');
@@ -38,14 +42,16 @@ function initDouban() {
                 toggleBg.classList.remove('bg-pink-600');
                 toggleDot.classList.remove('translate-x-6');
             }
-            
+
             // 更新显示状态
             updateDoubanVisibility();
         });
-        
+
         // 初始更新显示状态
         updateDoubanVisibility();
     }
+
+
 
     // 获取豆瓣热门标签
     fetchDoubanTags();
