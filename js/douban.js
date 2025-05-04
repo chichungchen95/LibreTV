@@ -11,8 +11,7 @@ const doubanPageSize = 16; // 一次显示的项目数量
 // 初始化豆瓣功能
 function initDouban() {
     // 设置豆瓣开关的初始状态
-    const doubanToggle = document.getElementById('doubanToggle').checked = true;
-    
+    const doubanToggle = document.getElementById('doubanToggle');
     if (doubanToggle) {
         const isEnabled = localStorage.getItem('doubanEnabled') === 'true';
         doubanToggle.checked = isEnabled;
